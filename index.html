@@ -625,8 +625,7 @@ const optic2 = {
     2: "Reflex",
     3: "x2",
     4: "x2 TRG",
-    5: "x3",
-    6: "Target Painter"
+    5: "Target Painter"
   };
 const ammo2 = {
     1: "Standard",
@@ -687,11 +686,15 @@ const ammo2 = {
 
 if (priNumber === 8) {
   opt1 = optic1[1];
-  amm1 = ammo1[1];
+}else if ((priNumber === 9 || priNumber === 10)&&(opt1Number === 2 || opt1Number === 3 || opt1Number === 4 )){
+  opt1 = optic1[1];
 } else {
   opt1 = optic1[opt1Number];
-  amm1 = ammo1[amm1Number];
 }
+if (priNumber === 8) {
+  amm1 = ammo1[1];
+} else {
+  amm1 = ammo1[amm1Number];}
 
 if (
   (per1Number === 31 || per2Number === 31 || per3Number === 31 || per4Number === 31) &&
