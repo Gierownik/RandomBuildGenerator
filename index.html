@@ -29,25 +29,36 @@
   <div id="d1"></div>
   <div id="d2"></div>
 <h3> Augments: </h3>
+<label for="augmentSlider">Number of Augments: <span id="augCount">4</span></label><br>
+<input type="range" id="augmentSlider" min="1" max="4" value="4" oninput="updateAugments(this.value)" />
   <div id="p1"></div>
   <div id="p2"></div>
   <div id="p3"></div>
   <div id="p4"></div>
 <h2> Weapons: </h2>
-<h3> Primary: </h3>
-<!--<h6> <i>There is a 90% chance that the mods wont be compatible</i> </h6>-->
-  <b><div id="prim"></div></b>
-  <div id="opt1"></div>
-  <div id="ammo1"></div>
-  <div id="mod11"></div>
-  <div id="mod12"></div>
-<h3> Secondary: </h3>
-<!--<h6> <i>There is a 90% chance that the mods wont be compatible</i> </h6>-->
-  <b><div id="sec"></div></b>
-  <div id="opt2"></div>
-  <div id="ammo2"></div>
-  <div id="mod21"></div>
-  <div id="mod22"></div>
+<label><input type="checkbox" checked onclick="toggleVisibility('primarySection')" /> Primary</label><br>
+  <label><input type="checkbox" checked onclick="toggleVisibility('secondarySection')" /> Secondary</label>
+  <div id="primarySection">
+    <h3> Primary: </h3>
+    <!--<h6> <i>There is a 90% chance that the mods wont be compatible</i> </h6>-->
+    <b><div id="prim"></div></b>
+    <div id="opt1"></div>
+    <div id="ammo1"></div>
+    <div id="mod11"></div>
+    <div id="mod12"></div>
+  </div>
+
+  <!-- Secondary Section -->
+  <div id="secondarySection">
+    <h3> Secondary: </h3>
+    <!--<h6> <i>There is a 90% chance that the mods wont be compatible</i> </h6>-->
+    <b><div id="sec"></div></b>
+    <div id="opt2"></div>
+    <div id="ammo2"></div>
+    <div id="mod21"></div>
+    <div id="mod22"></div>
+  </div>
+
 
 
 <script>
@@ -640,6 +651,24 @@ const ammo2 = {
     10: "Ghostfire",
     11: "TD"
   };
+  function toggleVisibility(sectionId) {
+      const section = document.getElementById(sectionId);
+      section.style.display = section.style.display === "none" ? "block" : "none";
+    }
+ 
+  function updateAugments(count) {
+    // Update label
+    document.getElementById('augCount').innerText = count;
+
+    // Loop through and toggle div visibility
+    for (let i = 1; i <= 4; i++) {
+      const div = document.getElementById('p' + i);
+      div.style.display = i <= count ? 'block' : 'none';
+    }
+  }
+
+
+  updateAugments(4);
 
   function generate() {
     const shellNumber = Math.floor(Math.random() * Object.keys(shell).length) + 1;
