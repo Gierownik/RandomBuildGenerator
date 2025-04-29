@@ -21,11 +21,12 @@
 </head>
 <body>
   <h1>Random Build Generator</h1>
-  <h2>If it generates an experimental device, double devices, exotic ammo, etc... either reroll or take the required augments</h2>
+  <h2>If it generates double devices, exotic ammo, etc... either reroll or take the required augments</h2>
   <button onclick="generate()">Generate</button>
 <h2>Build: </h2>  
 <div id="sh"></div>
   <div id="bck"></div>
+  <label><input type="checkbox" checked onclick="toggleExperimental(this)"  /><b><i> Experimental Devices?</i></b></label>
   <div id="d1"></div>
   <div id="d2"></div>
 <h3> Augments: </h3>
@@ -37,7 +38,7 @@
   <div id="p4"></div>
 <h2> Weapons: </h2>
 <label><input type="checkbox" checked onclick="toggleVisibility('primarySection')" /> Primary</label><br>
-  <label><input type="checkbox" checked onclick="toggleVisibility('secondarySection')" /> Secondary</label>
+  <label><input type="checkbox" checked onclick="toggleVisibility('secondarySection')" /> Secondary</label><br>
   <div id="primarySection">
     <h3> Primary: </h3>
     <!--<h6> <i>There is a 90% chance that the mods wont be compatible</i> </h6>-->
@@ -94,6 +95,19 @@
     15: "Bolster",
     16: "Reserve Stim"
   };
+  const device1N = {
+    1: "Detonator",
+    2: "Firecracker",
+    3: "Disrupter",
+    4: "Tempest",
+    5: "Satchel",
+    6: "Proximity Mine",
+    7: "Laser Wire",
+    8: "Overcharge",
+    9: "Shroud",
+    10: "Bolster",
+    11: "Reserve Stim"
+  };
   const device2 = {
     1: "Detonator",
     2: "Firecracker",
@@ -125,6 +139,33 @@
     28: "None",
     29: "None",
     30: "Reserve Stim"
+  };
+  const device2N = {
+    1: "Detonator",
+    2: "Firecracker",
+    3: "Disrupter",
+    4: "Tempest",
+    5: "Satchel",
+    6: "Proximity Mine",
+    7: "Laser Wire",
+    8: "Overcharge",
+    9: "Shroud",
+    10: "Bolster",
+    11: "None",
+    12: "None",
+    13: "None",
+    14: "None",
+    15: "None",
+    16: "None",
+    17: "None",
+    18: "None",
+    19: "None",
+    20: "None",
+    21: "None",
+    22: "None",
+    23: "None",
+    24: "None",
+    25: "Reserve Stim"
   };
  const perk1 = {
     1: "Acrobatics",
@@ -622,6 +663,12 @@ const ammo1 = {
     10: "Ghostfire",
     11: "TD"
   };
+  const ammoG = {
+    1: "Standard",
+    2: "Impact",
+    3: "Incendiary",
+    4: "Proximity"
+  };
 const secondary = {
     1: "Major",
     2: "Double-tap",
@@ -669,28 +716,44 @@ const ammo2 = {
 
 
   updateAugments(4);
+  let experimentalDevices = true;
+
+  function toggleExperimental(checkbox) {
+    experimentalDevices = checkbox.checked;
+    console.log("Experimental Devices enabled:", experimentalDevices);
+  }
 
   function generate() {
+    let per1Number;
     const shellNumber = Math.floor(Math.random() * Object.keys(shell).length) + 1;
     const backupNumber = Math.floor(Math.random() * Object.keys(backup).length) + 1;
     const dev1Number = Math.floor(Math.random() * Object.keys(device1).length) + 1;
     const dev2Number = Math.floor(Math.random() * Object.keys(device2).length) + 1;
-    const per1Number = Math.floor(Math.random() * Object.keys(perk1).length) + 1;
+    const dev1nNumber = Math.floor(Math.random() * Object.keys(device1N).length) + 1;
+    const dev2nNumber = Math.floor(Math.random() * Object.keys(device2N).length) + 1;
+    per1Number = Math.floor(Math.random() * Object.keys(perk1).length) + 1;
     const per2Number = Math.floor(Math.random() * Object.keys(perk2).length) + 1;
     const per3Number = Math.floor(Math.random() * Object.keys(perk3).length) + 1;
     const per4Number = Math.floor(Math.random() * Object.keys(perk4).length) + 1;
     const priNumber = Math.floor(Math.random() * Object.keys(primary).length) + 1;
     const opt1Number = Math.floor(Math.random() * Object.keys(optic1).length) + 1;
     const amm1Number = Math.floor(Math.random() * Object.keys(ammo1).length) + 1;
+    const ammGNumber = Math.floor(Math.random() * Object.keys(ammoG).length) + 1;
     const secNumber = Math.floor(Math.random() * Object.keys(secondary).length) + 1;
     const opt2Number = Math.floor(Math.random() * Object.keys(optic2).length) + 1;
     const amm2Number = Math.floor(Math.random() * Object.keys(ammo2).length) + 1;
 
 
     const shel = shell[shellNumber];
-    let opt1, amm1, back, per2, per3, per4;
-    const dev1 = device1[dev1Number];
-    const dev2 = device2[dev2Number];
+    let opt1, amm1, back, per2, per3, per4, dev1, dev2;
+    if (experimentalDevices === false){
+      dev1 = device1N[dev1nNumber];
+    dev2 = device2N[dev2nNumber];
+    } else {
+      dev1 = device1[dev1Number];
+    dev2 = device2[dev2Number];
+    per1Number = 24;
+    }
     const per1 = perk1[per1Number];
     const pri = primary[priNumber];
     const sec = secondary[secNumber];
@@ -721,7 +784,7 @@ if (priNumber === 8) {
   opt1 = optic1[opt1Number];
 }
 if (priNumber === 8) {
-  amm1 = ammo1[1];
+  amm1 = ammoG[ammGNumber];
 } else {
   amm1 = ammo1[amm1Number];}
 
