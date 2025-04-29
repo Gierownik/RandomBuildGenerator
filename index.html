@@ -583,7 +583,7 @@ const primary = {
     5: "Master-key",
     6: "Typhon",
     7: "Inhibitor",
-    8: "Warrant (Ignore Ammo)",
+    8: "Warrant",
     9: "Sentinel",
     10: "Vigil",
     11: "None"
@@ -668,8 +668,12 @@ const ammo2 = {
     const per3 = perk3[per3Number];
     const per4 = perk4[per4Number];
     const pri = primary[priNumber];
+    if (priNumber = 8) {
+      const opt1 = optic1[1];
+    const amm1 = ammo1[1];
+    }else{
     const opt1 = optic1[opt1Number];
-    const amm1 = ammo1[amm1Number];
+    const amm1 = ammo1[amm1Number];}
     const sec = secondary[secNumber];
     const opt2 = optic1[opt2Number];
     const amm2 = ammo2[amm2Number];
