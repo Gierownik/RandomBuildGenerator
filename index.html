@@ -37,7 +37,7 @@
   <div id="p3"></div>
   <div id="p4"></div>
 <h2> Weapons: </h2>
-<label><input type="checkbox" checked onclick="toggleVisibility('primarySection')" /> Primary</label><br>
+<label><input type="checkbox" id="togglePrimary"checked onclick="toggleVisibility('primarySection')" /> Primary</label><br>
   <label><input type="checkbox" checked onclick="toggleVisibility('secondarySection')" /> Secondary</label><br>
   <div id="primarySection">
     <h3> Primary: </h3>
@@ -800,6 +800,10 @@ if (
   back = "Blackout";
 } else {
   back = backup[backupNumber];
+}
+if (per1Number === 44 || per2Number === 44 || per3Number === 44 || per4Number === 44){
+  toggleVisibility('primarySection');
+  document.getElementById('togglePrimary').checked = false;
 }
 
 
