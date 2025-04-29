@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Random Build Generator</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      padding-top: 50px;
+    }
+    button {
+      font-size: 1.2em;
+      padding: 10px 20px;
+    }
+    #result {
+      margin-top: 30px;
+      font-size: 2em;
+    }
+  </style>
+</head>
+<body>
+  <h1>Random Build Generator</h1>
+  <h2>If it generates an experimental device, double devices, proffesional, etc... either reroll or take the required augments</h2>
+  <button onclick="generate()">Generate</button>
+<h2>Build: </h2>  
+<div id="sh"></div>
+  <div id="bck"></div>
+  <div id="d1"></div>
+  <div id="d2"></div>
+<h3> Augments: </h3>
+  <div id="p1"></div>
+  <div id="p2"></div>
+  <div id="p3"></div>
+  <div id="p4"></div>
+<h2> Weapons: </h2>
+<h3> Primary: </h3>
+<!--<h6> <i>There is a 90% chance that the mods wont be compatible</i> </h6>-->
+  <b><div id="prim"></div></b>
+  <div id="opt1"></div>
+  <div id="ammo1"></div>
+  <div id="mod11"></div>
+  <div id="mod12"></div>
+<h3> Secondary: </h3>
+<!--<h6> <i>There is a 90% chance that the mods wont be compatible</i> </h6>-->
+  <b><div id="sec"></div></b>
+  <div id="opt2"></div>
+  <div id="ammo2"></div>
+  <div id="mod21"></div>
+  <div id="mod22"></div>
+
+
+<script>
+  const shell = {
+    1: "Bison",
+    2: "Ghost",
+    3: "Rhino",
+    4: "Dragon",
+    5: "Hydra"
+  };
+
+  const backup = {
+    1: "Fists",
+    2: "Dusters",
+    3: "TTK",
+    4: "Akanami"
+  };
+  const device1 = {
+    1: "Detonator",
+    2: "Firecracker",
+    3: "Disrupter",
+    4: "Tempest",
+    5: "Relocator",
+    6: "Satchel",
+    7: "Proximity Mine",
+    8: "Laser Wire",
+    9: "AAP Turret",
+    10: "Deadzone",
+    11: "Breach",
+    12: "Overcharge",
+    13: "Shifter",
+    14: "Shroud",
+    15: "Bolster",
+    16: "Reserve Stim"
+  };
+  const device2 = {
+    1: "Detonator",
+    2: "Firecracker",
+    3: "Disrupter",
+    4: "Tempest",
+    5: "Relocator",
+    6: "Satchel",
+    7: "Proximity Mine",
+    8: "Laser Wire",
+    9: "AAP Turret",
+    10: "Deadzone",
+    11: "Breach",
+    12: "Overcharge",
+    13: "Shifter",
+    14: "Shroud",
+    15: "Bolster",
+    16: "None",
+    17: "None",
+    18: "None",
+    19: "None",
+    20: "None",
+    21: "None",
+    22: "None",
+    23: "None",
+    24: "None",
+    25: "None",
+    26: "None",
+    27: "None",
+    28: "None",
+    29: "None",
+    30: "Reserve Stim"
+  };
+ const perk1 = {
+    1: "Acrobatics",
+    2: "Addict",
+    3: "Adrenaline Rush",
+    4: "Advanced Recon",
+    5: "Armadillo",
+    6: "Akimbo",
+    7: "Augmented Arms",
+    8: "Augmented Legs",
+    9: "Augmented Nanowire",
+    10: "Auto-Doc",
+    11: "Auxiliary Vitals",
+    12: "Bloodsport",
+    13: "Caustic",
+    14: "Chemical Warfare",
+    15: "Chain Reaction",
+    16: "Combat Core",
+    17: "Counterbalance",
+    18: "Counter Inteligence",
+    19: "Covert",
+    20: "Damage Report",
+    21: "Disengage",
+    22: "Dispersal",
+    23: "Enhanced Dexterity",
+    24: "Experimental",
+    25: "Exploit Weakness",
+    26: "Failsafe",
+    27: "Gecko",
+    28: "Hardcase",
+    29: "Hardened",
+    29: "Headhunter",
+    30: "Heavy Ordnance",
+    31: "Heavy Weapons: Take Blackout if Dusters/Fists Take Umibozu if Akanami/TTK",
+    32: "None?",
+    33: "Hunter Optics",
+    34: "Inertial Buffer",
+    35: "Kinetic Focus",
+    36: "Kinetic Injectors",
+    37: "Unstable Core",
+    38: "Low Profile",
+    39: "Maximum Efficiency",
+    40: "Overclocked",
+    41: "Overseer",
+    42: "Perpetual Montion",
+    43: "Potent Stimulants",
+    44: "Proffesional",
+    45: "Puncture",
+    46: "Reactive Core",
+    47: "Reactive Dermis",
+    48: "Recovery",
+    49: "Renewal",
+    50: "Resourcefull",
+    51: "Reversal",
+    52: "Specialist",
+    53: "Surplus",
+    54: "Technician",
+    55: "Temporal Suspension",
+    56: "Tether",
+    57: "Threat Detection",
+    58: "Transference",
+    59: "Vendetta",
+    60: "Versatile",
+  };
+ const perk2 = {
+    1: "Acrobatics",
+    2: "Addict",
+    3: "Adrenaline Rush",
+    4: "Advanced Recon",
+    5: "Armadillo",
+    6: "Akimbo",
+    7: "Augmented Arms",
+    8: "Augmented Legs",
+    9: "Augmented Nanowire",
+    10: "Auto-Doc",
+    11: "Auxiliary Vitals",
+    12: "Bloodsport",
+    13: "Caustic",
+    14: "Chemical Warfare",
+    15: "Chain Reaction",
+    16: "Combat Core",
+    17: "Counterbalance",
+    18: "Counter Inteligence",
+    19: "Covert",
+    20: "Damage Report",
+    21: "Disengage",
+    22: "Dispersal",
+    23: "Enhanced Dexterity",
+    24: "Experimental",
+    25: "Exploit Weakness",
+    26: "Failsafe",
+    27: "Gecko",
+    28: "Hardcase",
+    29: "Hardened",
+    29: "Headhunter",
+    30: "Heavy Ordnance",
+    31: "Heavy Weapons: Take Blackout if Dusters/Fists Take Umibozu if Akanami/TTK",
+    32: "I think None",
+    33: "Hunter Optics",
+    34: "Inertial Buffer",
+    35: "Kinetic Focus",
+    36: "Kinetic Injectors",
+    37: "Unstable Core",
+    38: "Low Profile",
+    39: "Maximum Efficiency",
+    40: "Overclocked",
+    41: "Overseer",
+    42: "Perpetual Montion",
+    43: "Potent Stimulants",
+    44: "Proffesional",
+    45: "Puncture",
+    46: "Reactive Core",
+    47: "Reactive Dermis",
+    48: "Recovery",
+    49: "Renewal",
+    50: "Resourcefull",
+    51: "Reversal",
+    52: "Specialist",
+    53: "Surplus",
+    54: "Technician",
+    55: "Temporal Suspension",
+    56: "Tether",
+    57: "Threat Detection",
+    58: "Transference",
+    59: "Vendetta",
+    60: "Versatile",
+    61: "None",
+62: "None",
+63: "None",
+64: "None",
+65: "None",
+66: "None",
+67: "None",
+68: "None",
+69: "None",
+70: "None",
+71: "None",
+72: "None",
+73: "None",
+74: "None",
+75: "None",
+76: "None",
+77: "None",
+78: "None",
+79: "None",
+80: "None",
+81: "None",
+82: "None",
+83: "None",
+84: "None",
+85: "None"
+  };
+ const perk3 = {
+    1: "Acrobatics",
+    2: "Addict",
+    3: "Adrenaline Rush",
+    4: "Advanced Recon",
+    5: "Armadillo",
+    6: "Akimbo",
+    7: "Augmented Arms",
+    8: "Augmented Legs",
+    9: "Augmented Nanowire",
+    10: "Auto-Doc",
+    11: "Auxiliary Vitals",
+    12: "Bloodsport",
+    13: "Caustic",
+    14: "Chemical Warfare",
+    15: "Chain Reaction",
+    16: "Combat Core",
+    17: "Counterbalance",
+    18: "Counter Inteligence",
+    19: "Covert",
+    20: "Damage Report",
+    21: "Disengage",
+    22: "Dispersal",
+    23: "Enhanced Dexterity",
+    24: "Experimental",
+    25: "Exploit Weakness",
+    26: "Failsafe",
+    27: "Gecko",
+    28: "Hardcase",
+    29: "Hardened",
+    29: "Headhunter",
+    30: "Heavy Ordnance",
+    31: "Heavy Weapons: Take Blackout if Dusters/Fists Take Umibozu if Akanami/TTK",
+    32: "I think None",
+    33: "Hunter Optics",
+    34: "Inertial Buffer",
+    35: "Kinetic Focus",
+    36: "Kinetic Injectors",
+    37: "Unstable Core",
+    38: "Low Profile",
+    39: "Maximum Efficiency",
+    40: "Overclocked",
+    41: "Overseer",
+    42: "Perpetual Montion",
+    43: "Potent Stimulants",
+    44: "Proffesional",
+    45: "Puncture",
+    46: "Reactive Core",
+    47: "Reactive Dermis",
+    48: "Recovery",
+    49: "Renewal",
+    50: "Resourcefull",
+    51: "Reversal",
+    52: "Specialist",
+    53: "Surplus",
+    54: "Technician",
+    55: "Temporal Suspension",
+    56: "Tether",
+    57: "Threat Detection",
+    58: "Transference",
+    59: "Vendetta",
+    60: "Versatile",
+    61: "None",
+62: "None",
+63: "None",
+64: "None",
+65: "None",
+66: "None",
+67: "None",
+68: "None",
+69: "None",
+70: "None",
+71: "None",
+72: "None",
+73: "None",
+74: "None",
+75: "None",
+76: "None",
+77: "None",
+78: "None",
+79: "None",
+80: "None",
+81: "None",
+82: "None",
+83: "None",
+84: "None",
+85: "None",
+86: "None",
+87: "None",
+88: "None",
+89: "None",
+90: "None",
+91: "None",
+92: "None",
+93: "None",
+94: "None",
+95: "None",
+96: "None",
+97: "None",
+98: "None",
+99: "None",
+100: "None"
+
+  };
+ const perk4 = {
+    1: "Acrobatics",
+    2: "Addict",
+    3: "Adrenaline Rush",
+    4: "Advanced Recon",
+    5: "Armadillo",
+    6: "Akimbo",
+    7: "Augmented Arms",
+    8: "Augmented Legs",
+    9: "Augmented Nanowire",
+    10: "Auto-Doc",
+    11: "Auxiliary Vitals",
+    12: "Bloodsport",
+    13: "Caustic",
+    14: "Chemical Warfare",
+    15: "Chain Reaction",
+    16: "Combat Core",
+    17: "Counterbalance",
+    18: "Counter Inteligence",
+    19: "Covert",
+    20: "Damage Report",
+    21: "Disengage",
+    22: "Dispersal",
+    23: "Enhanced Dexterity",
+    24: "Experimental",
+    25: "Exploit Weakness",
+    26: "Failsafe",
+    27: "Gecko",
+    28: "Hardcase",
+    29: "Hardened",
+    29: "Headhunter",
+    30: "Heavy Ordnance",
+    31: "Heavy Weapons: Take Blackout if Dusters/Fists Take Umibozu if Akanami/TTK",
+    32: "I think None",
+    33: "Hunter Optics",
+    34: "Inertial Buffer",
+    35: "Kinetic Focus",
+    36: "Kinetic Injectors",
+    37: "Unstable Core",
+    38: "Low Profile",
+    39: "Maximum Efficiency",
+    40: "Overclocked",
+    41: "Overseer",
+    42: "Perpetual Montion",
+    43: "Potent Stimulants",
+    44: "Proffesional",
+    45: "Puncture",
+    46: "Reactive Core",
+    47: "Reactive Dermis",
+    48: "Recovery",
+    49: "Renewal",
+    50: "Resourcefull",
+    51: "Reversal",
+    52: "Specialist",
+    53: "Surplus",
+    54: "Technician",
+    55: "Temporal Suspension",
+    56: "Tether",
+    57: "Threat Detection",
+    58: "Transference",
+    59: "Vendetta",
+    60: "Versatile",
+    61: "None",
+62: "None",
+63: "None",
+64: "None",
+65: "None",
+66: "None",
+67: "None",
+68: "None",
+69: "None",
+70: "None",
+71: "None",
+72: "None",
+73: "None",
+74: "None",
+75: "None",
+76: "None",
+77: "None",
+78: "None",
+79: "None",
+80: "None",
+81: "None",
+82: "None",
+83: "None",
+84: "None",
+85: "None",
+86: "None",
+87: "None",
+88: "None",
+89: "None",
+90: "None",
+91: "None",
+92: "None",
+93: "None",
+94: "None",
+95: "None",
+96: "None",
+97: "None",
+98: "None",
+99: "None",
+100: "None",
+101: "None",
+102: "None",
+103: "None",
+104: "None",
+105: "None",
+106: "None",
+107: "None",
+108: "None",
+109: "None",
+110: "None",
+111: "None",
+112: "None",
+113: "None",
+114: "None",
+115: "None",
+116: "None",
+117: "None",
+118: "None",
+119: "None",
+120: "None",
+121: "None",
+122: "None",
+123: "None",
+124: "None",
+125: "None",
+126: "None",
+127: "None",
+128: "None",
+129: "None",
+130: "None",
+131: "None",
+132: "None",
+133: "None",
+134: "None",
+135: "None",
+136: "None",
+137: "None",
+138: "None",
+139: "None",
+140: "None",
+141: "None",
+142: "None",
+143: "None",
+144: "None",
+145: "None",
+146: "None",
+147: "None",
+148: "None",
+149: "None",
+150: "None",
+151: "None",
+152: "None",
+153: "None",
+154: "None",
+155: "None",
+156: "None",
+157: "None",
+158: "None",
+159: "None",
+160: "None",
+161: "None",
+162: "None",
+163: "None",
+164: "None",
+165: "None",
+166: "None",
+167: "None",
+168: "None",
+169: "None",
+170: "None",
+171: "None",
+172: "None",
+173: "None",
+174: "None",
+175: "None",
+176: "None",
+177: "None",
+178: "None",
+179: "None",
+180: "None",
+181: "None",
+182: "None",
+183: "None",
+184: "None",
+185: "None",
+186: "None",
+187: "None",
+188: "None",
+189: "None",
+190: "None",
+191: "None",
+192: "None",
+193: "None",
+194: "None",
+195: "None",
+196: "None",
+197: "None",
+198: "None",
+199: "None",
+200: "None"
+
+
+  };
+const primary = {
+    1: "Custodian",
+    2: "Helix",
+    3: "Nexus",
+    4: "Icarus",
+    5: "Master-key",
+    6: "Typhon",
+    7: "Inhibitor",
+    8: "Warrant (Ignore Ammo)",
+    9: "Sentinel",
+    10: "Vigil",
+    11: "None"
+  };
+const optic1 = {
+    1: "Iron/Marksman",
+    2: "Reflex",
+    3: "x2",
+    4: "x2 TRG",
+    5: "x3",
+    6: "x4 TRG",
+    7: "x4",
+    9: "Target Painter"
+  };
+const ammo1 = {
+    1: "Standard",
+    2: "Shred",
+    3: "Heavy",
+    4: "Piercing",
+    5: "Incendiary",
+    6: "CB",
+    7: "T-Lock",
+    8: "EM",
+    9: "CHEM",
+    10: "Ghostfire",
+    11: "TD"
+  };
+const secondary = {
+    1: "Major",
+    2: "Double-tap",
+    3: "Deckard",
+    4: "Omen",
+    5: "Geist",
+    6: "Cerberus",
+    7: "None"
+  };
+const optic2 = {
+    1: "Iron",
+    2: "Reflex",
+    3: "x2",
+    4: "x2 TRG",
+    5: "x3",
+    6: "Target Painter"
+  };
+const ammo2 = {
+    1: "Standard",
+    2: "Shred",
+    3: "Heavy",
+    4: "Piercing",
+    5: "Incendiary",
+    6: "CB",
+    7: "T-Lock",
+    8: "EM",
+    9: "CHEM",
+    10: "Ghostfire",
+    11: "TD"
+  };
+
+  function generate() {
+    const shellNumber = Math.floor(Math.random() * Object.keys(shell).length) + 1;
+    const backupNumber = Math.floor(Math.random() * Object.keys(backup).length) + 1;
+    const dev1Number = Math.floor(Math.random() * Object.keys(device1).length) + 1;
+    const dev2Number = Math.floor(Math.random() * Object.keys(device2).length) + 1;
+    const per1Number = Math.floor(Math.random() * Object.keys(perk1).length) + 1;
+    const per2Number = Math.floor(Math.random() * Object.keys(perk2).length) + 1;
+    const per3Number = Math.floor(Math.random() * Object.keys(perk3).length) + 1;
+    const per4Number = Math.floor(Math.random() * Object.keys(perk4).length) + 1;
+    const priNumber = Math.floor(Math.random() * Object.keys(primary).length) + 1;
+    const opt1Number = Math.floor(Math.random() * Object.keys(optic1).length) + 1;
+    const amm1Number = Math.floor(Math.random() * Object.keys(ammo1).length) + 1;
+    const secNumber = Math.floor(Math.random() * Object.keys(secondary).length) + 1;
+    const opt2Number = Math.floor(Math.random() * Object.keys(optic2).length) + 1;
+    const amm2Number = Math.floor(Math.random() * Object.keys(ammo2).length) + 1;
+
+
+    const shel = shell[shellNumber];
+    const back = backup[backupNumber];
+    const dev1 = device1[dev1Number];
+    const dev2 = device2[dev2Number];
+    const per1 = perk1[per1Number];
+    const per2 = perk2[per2Number];
+    const per3 = perk3[per3Number];
+    const per4 = perk4[per4Number];
+    const pri = primary[priNumber];
+    const opt1 = optic1[opt1Number];
+    const amm1 = ammo1[amm1Number];
+    const sec = secondary[secNumber];
+    const opt2 = optic1[opt2Number];
+    const amm2 = ammo2[amm2Number];
+
+
+    document.getElementById('sh').innerText = `Shell: ${shel}`;
+    document.getElementById('bck').innerText = `Backup: ${back}`;
+    document.getElementById('d1').innerText = `Device 1: ${dev1}`;
+    document.getElementById('d2').innerText = `Device 2: ${dev2}`;
+    document.getElementById('p1').innerText = `Augment 1: ${per1}`;
+    document.getElementById('p2').innerText = `Augment 2: ${per2}`;
+    document.getElementById('p3').innerText = `Augment 3: ${per3}`;
+    document.getElementById('p4').innerText = `Augment 4: ${per4}`;
+    document.getElementById('prim').innerText = `${pri}`;
+    document.getElementById('opt1').innerText = `Optics: ${opt1}`;
+    document.getElementById('ammo1').innerText = `Ammo: ${amm1}`;
+    document.getElementById('sec').innerText = `${sec}`;
+    document.getElementById('opt2').innerText = `Optics: ${opt2}`;
+    document.getElementById('ammo2').innerText = `Ammo: ${amm2}`;
+  }
+</script>
+</body>
+</html>
