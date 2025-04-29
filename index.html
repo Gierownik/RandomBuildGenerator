@@ -660,14 +660,30 @@ const ammo2 = {
 
 
     const shel = shell[shellNumber];
+    let opt1, amm1, back, per2, per3, per4;
     const dev1 = device1[dev1Number];
     const dev2 = device2[dev2Number];
     const per1 = perk1[per1Number];
-    const per2 = perk2[per2Number];
-    const per3 = perk3[per3Number];
-    const per4 = perk4[per4Number];
     const pri = primary[priNumber];
-    let opt1, amm1;
+    const sec = secondary[secNumber];
+    opt2 = optic2[opt2Number];
+    amm2 = ammo2[amm2Number];
+    if (per1Number === per2Number){
+      per2 = perk2[(per2Number * per3Number) / per1Number];
+    } else {
+      per2 = perk2[per2Number];
+    }
+    if (per1Number === per3Number || per2Number === per3Number){
+      per3 = perk3[(per3Number * per1Number) / per2Number];
+    } else {
+      per3 = perk3[per3Number];
+    }
+    if (per1Number === per4Number || per2Number === per4Number || per3Number === per4Number){
+      per3 = perk4[(per4Number * per3Number) / per3Number];
+    } else {
+      per4 = perk4[per4Number];
+    }
+    
 
 if (priNumber === 8) {
   opt1 = optic1[1];
@@ -676,7 +692,6 @@ if (priNumber === 8) {
   opt1 = optic1[opt1Number];
   amm1 = ammo1[amm1Number];
 }
-let back;
 
 if (
   (per1Number === 31 || per2Number === 31 || per3Number === 31 || per4Number === 31) &&
